@@ -10,7 +10,8 @@ module DataStruct
         defaultColor,
         Pixel (..),
         defaultPixel,
-        euclideanDistance
+        euclideanDistance,
+        showListOfPixels
     ) where
 
 data Color = Color {
@@ -36,6 +37,10 @@ defaultPixel = Pixel { x = 0, y = 0, color = defaultColor }
 
 instance Show Pixel where
     show (Pixel a b c) = "(" ++ show a ++ "," ++ show b ++ ") " ++ show c
+
+showListOfPixels :: [Pixel] -> [Char]
+showListOfPixels [] = ""
+showListOfPixels (a:as) = "\n" ++ show a ++ showListOfPixels as
 
 square :: Int -> Int
 square d = d * d

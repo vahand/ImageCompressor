@@ -8,7 +8,8 @@
 module Main (main) where
 
 import Options
-import DataStruct
+import DataStruct()
+import Cluster
 
 import System.Environment (getArgs)
 
@@ -17,5 +18,5 @@ main = do
     args <- getArgs
     opts <- parseArgs args
     print opts
-    let pixel = defaultPixel
-    print pixel
+    let cluster = defaultCluster
+    print cluster
