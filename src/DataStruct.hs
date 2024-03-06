@@ -9,7 +9,8 @@ module DataStruct
     ( Color (..),
         defaultColor,
         Pixel (..),
-        defaultPixel
+        defaultPixel,
+        euclideanDistance
     ) where
 
 data Color = Color {
@@ -35,3 +36,10 @@ defaultPixel = Pixel { x = 0, y = 0, color = defaultColor }
 
 instance Show Pixel where
     show (Pixel a b c) = "(" ++ show a ++ "," ++ show b ++ ") " ++ show c
+
+square :: Int -> Int
+square d = d * d
+
+euclideanDistance :: Pixel -> Pixel -> Float
+euclideanDistance (Pixel _ _ (Color r1 g1 b1)) (Pixel _ _ (Color r2 g2 b2)) =
+    sqrt $ fromIntegral $ square(r1 - r2) + square(g1 - g2) + square(b1 - b2)
