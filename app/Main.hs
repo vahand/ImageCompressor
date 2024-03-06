@@ -8,6 +8,7 @@
 module Main (main) where
 
 import Options
+import DataStruct
 
 import System.Environment (getArgs)
 
@@ -16,3 +17,5 @@ main = do
     args <- getArgs
     opts <- parseArgs args
     print opts
+    let pixel = defaultPixel
+    print pixel

@@ -25,6 +25,7 @@ source-repository head
 
 library
   exposed-modules:
+      DataStruct
       Options
   other-modules:
       Paths_compressor
