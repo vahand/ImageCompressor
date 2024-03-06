@@ -18,5 +18,4 @@ main = do
     args <- getArgs
     opts <- parseArgs args
     print opts
-    let cluster = defaultCluster
-    print cluster
+    putStr (showListOfCluster (createTabCluster 4))
