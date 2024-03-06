@@ -17,13 +17,13 @@ import System.Exit (exitFailure)
 
 data Options = Options {
     numberOfColors :: Int,
-    convergenceLimit :: Int,
+    convergenceLimit :: Float,
     filePath :: FilePath
 } deriving Show
 
 defaultOptions :: Options
 defaultOptions = Options { numberOfColors = 0,
-    convergenceLimit = 0, filePath = "" }
+    convergenceLimit = 0.0, filePath = "" }
 
 options :: [OptDescr (Options -> Options)]
 options = [
