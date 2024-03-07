@@ -12,8 +12,6 @@ module Parser
     )
 where
 
-import System.IO
-
 get_file_content :: String -> IO String
 get_file_content filename = readFile filename
 
@@ -28,5 +26,5 @@ printLines (x:xs) = putStrLn x >> printLines xs
 
 parse :: String -> IO ()
 parse filename = do
-    lines <- get_lines_of_file filename
-    printLines lines
+    lin <- get_lines_of_file filename
+    printLines lin
