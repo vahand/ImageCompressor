@@ -13,6 +13,11 @@ import Cluster
 import System.Random
 
 import System.Environment (getArgs)
+import Parser
+
+printLines :: [String] -> IO ()
+printLines [] = return ()
+printLines (x:xs) = putStrLn x >> printLines xs
 
 main :: IO ()
 main = do
