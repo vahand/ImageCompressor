@@ -9,19 +9,22 @@ module Cluster
     ( Cluster (..),
         defaultCluster,
         showListOfCluster,
-        createTabCluster
+        createTabCluster,
+        createTabClusteropts
     ) where
 
 import DataStruct
+import Options
+import System.Random
 
 data Cluster = Cluster {
     pixels :: [Pixel],
     centroid :: Pixel
 }
 
-defaultCluster :: Cluster
-defaultCluster = Cluster {pixels = [defaultPixel, defaultPixel],
-    centroid = defaultPixel}
+defaultCluster :: StdGen -> Cluster
+defaultCluster gen = Cluster {pixels = [defaultPixel],
+    centroid = randomPixel gen}
 
 instance Show Cluster where
     show (Cluster (b:bs) (Pixel _ _ col)) = "--\n" ++ show col ++ "\n-\n" ++ show b ++ showListOfPixels bs ++ "\n"
@@ -31,6 +34,14 @@ showListOfCluster :: [Cluster] -> [Char]
 showListOfCluster [] = ""
 showListOfCluster (a:as) = show a ++ showListOfCluster as
 
-createTabCluster :: Int -> [Cluster]
-createTabCluster 0 = []
-createTabCluster n = replicate n defaultCluster
+getstdGen :: StdGen -> StdGen
+getstdGen gen = snd (split gen)
+
+createTabClusteropts :: Options -> StdGen -> [Cluster]
+createTabClusteropts opts gen = createTabCluster (numberOfColors opts) gen
+
+createTabCluster :: Int -> StdGen -> [Cluster]
+createTabCluster 0 _ = []
+createTabCluster n seed =
+    (defaultCluster gen) : (createTabCluster (n - 1) gen) where
+        gen = getstdGen seed

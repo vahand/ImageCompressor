@@ -10,6 +10,7 @@ module Main (main) where
 import Options
 import DataStruct()
 import Cluster
+import System.Random
 
 import System.Environment (getArgs)
 
@@ -18,4 +19,6 @@ main = do
     args <- getArgs
     opts <- parseArgs args
     print opts
-    putStr (showListOfCluster (createTabCluster 4))
+    gen <- newStdGen
+    let tab = createTabClusteropts opts gen
+    putStr (showListOfCluster tab)

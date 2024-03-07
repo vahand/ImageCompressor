@@ -11,8 +11,11 @@ module DataStruct
         Pixel (..),
         defaultPixel,
         euclideanDistance,
-        showListOfPixels
+        showListOfPixels,
+        randomPixel
     ) where
+
+import System.Random
 
 data Color = Color {
     red :: Int,
@@ -22,6 +25,13 @@ data Color = Color {
 
 defaultColor :: Color
 defaultColor = Color { red = 0, green = 0, blue = 0 }
+
+randomColor :: StdGen -> Color
+randomColor gen =
+    let (r, gen') = randomR (0, 255) gen
+        (g, gen'') = randomR (0, 255) gen'
+        (b, _) = randomR (0, 255) gen''
+    in Color { red = r, green = g, blue = b }
 
 instance Show Color where
     show (Color r g b) = "(" ++ show r ++ "," ++ show g ++ "," ++ show b ++ ")"
@@ -34,6 +44,9 @@ data Pixel = Pixel {
 
 defaultPixel :: Pixel
 defaultPixel = Pixel { x = 0, y = 0, color = defaultColor }
+
+randomPixel :: StdGen -> Pixel
+randomPixel gen = Pixel { x = 0, y = 0, color = randomColor gen }
 
 instance Show Pixel where
     show (Pixel a b c) = "(" ++ show a ++ "," ++ show b ++ ") " ++ show c
