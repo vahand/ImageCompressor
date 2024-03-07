@@ -29,6 +29,7 @@ library
       Convergence
       DataStruct
       Options
+      Parser
   other-modules:
       Paths_compressor
   autogen-modules:
