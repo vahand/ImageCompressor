@@ -8,11 +8,12 @@
 module Main (main) where
 
 import Options
-import DataStruct()
+import DataStruct
 import Cluster
 import System.Random
 
 import System.Environment (getArgs)
+import Parser
 
 main :: IO ()
 main = do
@@ -21,4 +22,7 @@ main = do
     print opts
     gen <- newStdGen
     let tab = createTabClusteropts opts gen
+    linesFromFile <- getLinesListFromFile "test.txt"
+    let pixelsLet = parse linesFromFile
+    putStrLn (showListOfPixels pixelsLet)
     putStr (showListOfCluster tab)
