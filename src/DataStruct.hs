@@ -11,7 +11,9 @@ module DataStruct
         Pixel (..),
         defaultPixel,
         euclideanDistance,
-        showListOfPixels
+        showListOfPixels,
+        createColor,
+        createPixel
     ) where
 
 data Color = Color {
@@ -22,6 +24,9 @@ data Color = Color {
 
 defaultColor :: Color
 defaultColor = Color { red = 0, green = 0, blue = 0 }
+
+createColor :: Int -> Int -> Int -> Color
+createColor r g b = Color { red = r, green = g, blue = b }
 
 instance Show Color where
     show (Color r g b) = "(" ++ show r ++ "," ++ show g ++ "," ++ show b ++ ")"
@@ -34,6 +39,9 @@ data Pixel = Pixel {
 
 defaultPixel :: Pixel
 defaultPixel = Pixel { x = 0, y = 0, color = defaultColor }
+
+createPixel :: Int -> Int -> Color -> Pixel
+createPixel xp yp c = Pixel { x = xp, y = yp, color = c }
 
 instance Show Pixel where
     show (Pixel a b c) = "(" ++ show a ++ "," ++ show b ++ ") " ++ show c

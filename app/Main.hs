@@ -8,19 +8,18 @@
 module Main (main) where
 
 import Options
-import DataStruct()
+import DataStruct
 import Cluster
 
 import System.Environment (getArgs)
 import Parser
-
-printLines :: [String] -> IO ()
-printLines [] = return ()
-printLines (x:xs) = putStrLn x >> printLines xs
 
 main :: IO ()
 main = do
     args <- getArgs
     opts <- parseArgs args
     print opts
+    linesFromFile <- getLinesListFromFile "test.txt"
+    let pixelsLet = parse linesFromFile
+    putStrLn (showListOfPixels pixelsLet)
     putStr (showListOfCluster (createTabCluster 4))
