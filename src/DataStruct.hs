@@ -16,7 +16,8 @@ module DataStruct
         createColor,
         createPixel,
         averagecolor,
-        sumcolor
+        sumcolor,
+        emptyPixel
     ) where
 
 import System.Random
@@ -25,7 +26,7 @@ data Color = Color {
     red :: Int,
     green :: Int,
     blue :: Int
-}
+} deriving Eq
 
 defaultColor :: Color
 defaultColor = Color { red = 0, green = 0, blue = 0 }
@@ -59,7 +60,7 @@ data Pixel = Pixel {
     x :: Int,
     y :: Int,
     color :: Color
-}
+} deriving Eq
 
 defaultPixel :: Pixel
 defaultPixel = Pixel { x = 0, y = 0, color = defaultColor }
@@ -69,6 +70,9 @@ randomPixel gen = Pixel { x = 0, y = 0, color = randomColor gen }
 
 createPixel :: Int -> Int -> Color -> Pixel
 createPixel xp yp c = Pixel { x = xp, y = yp, color = c }
+
+emptyPixel :: [Pixel] -> [Pixel]
+emptyPixel _ = []
 
 instance Show Pixel where
     show (Pixel a b c) = "(" ++ show a ++ "," ++ show b ++ ") " ++ show c

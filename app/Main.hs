@@ -22,7 +22,7 @@ main = do
     print opts
     gen <- newStdGen
     let tab = createTabClusteropts opts gen
-    linesFromFile <- getLinesListFromFile "test.txt"
+    linesFromFile <- getLinesListFromFile $ getFilePath opts
     let pixelsLet = parse linesFromFile
     putStrLn (showListOfPixels pixelsLet)
     putStr (showListOfCluster tab)

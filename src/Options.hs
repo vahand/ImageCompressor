@@ -9,7 +9,8 @@ module Options
     ( Options (..),
         defaultOptions,
         options,
-        parseArgs
+        parseArgs,
+        getFilePath
     ) where
 
 import System.Console.GetOpt
@@ -34,6 +35,9 @@ options = [
     Option ['f'] ["file-path"] (ReqArg (\arg opt -> opt
         { filePath = arg }) "F") "File containing the colors of the pixels"
     ]
+
+getFilePath :: Options -> FilePath
+getFilePath opts = (filePath opts)
 
 parseArgs :: [String] -> IO Options
 parseArgs args =

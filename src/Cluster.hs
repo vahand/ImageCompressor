@@ -10,7 +10,8 @@ module Cluster
         defaultCluster,
         showListOfCluster,
         createTabCluster,
-        createTabClusteropts
+        createTabClusteropts,
+        emptyCluster
     ) where
 
 import DataStruct
@@ -25,6 +26,10 @@ data Cluster = Cluster {
 defaultCluster :: StdGen -> Cluster
 defaultCluster gen = Cluster {pixels = [defaultPixel],
     centroid = randomPixel gen}
+
+emptyCluster :: [Cluster] -> [Cluster]
+emptyCluster [] = []
+emptyCluster (cl:cls) = emptyPixel (pixels cl) >> emptyCluster cls
 
 instance Show Cluster where
     show (Cluster (b:bs) (Pixel _ _ col)) = "--\n" ++ show col ++ "\n-\n" ++ show b ++ showListOfPixels bs ++ "\n"
