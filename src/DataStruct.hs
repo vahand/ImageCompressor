@@ -17,6 +17,8 @@ module DataStruct
         createPixel
     ) where
 
+import System.Random
+
 data Color = Color {
     red :: Int,
     green :: Int,
