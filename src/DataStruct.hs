@@ -14,7 +14,9 @@ module DataStruct
         showListOfPixels,
         randomPixel,
         createColor,
-        createPixel
+        createPixel,
+        averagecolor,
+        sumcolor
     ) where
 
 import System.Random
@@ -37,6 +39,18 @@ randomColor gen =
         (g, gen'') = randomR (0, 255) gen'
         (b, _) = randomR (0, 255) gen''
     in Color { red = r, green = g, blue = b }
+
+sumcolor :: [Pixel] -> Color
+sumcolor [] = defaultColor
+sumcolor (p:ps) =
+    let (Color r g b) = color p
+        (Color r' g' b') = sumcolor ps
+    in Color (r + r') (g + g') (b + b')
+
+averagecolor :: [Pixel] -> Color -> Color -> Color
+averagecolor [] _ def = def
+averagecolor tab sums _ = Color (red sums `div` length tab)
+    (green sums `div` length tab) (blue sums `div` length tab)
 
 instance Show Color where
     show (Color r g b) = "(" ++ show r ++ "," ++ show g ++ "," ++ show b ++ ")"
