@@ -7,11 +7,11 @@
 
 BINARYPATH =	$(shell stack path --local-install-root)
 
-NAME = compressor
+NAME = imageCompressor
 
 all:
 	stack build
-	cp $(BINARYPATH)/bin/$(NAME)-exe ./$(NAME)
+	cp $(BINARYPATH)/bin/compressor-exe ./$(NAME)
 
 clean:
 	stack clean
