@@ -11,7 +11,8 @@ module Cluster
         showListOfCluster,
         createTabCluster,
         createTabClusteropts,
-        emptyCluster
+        emptyCluster,
+        assignPixelsToClusters
     ) where
 
 import DataStruct
@@ -50,3 +51,13 @@ createTabCluster 0 _ = []
 createTabCluster n seed =
     (defaultCluster gen) : (createTabCluster (n - 1) gen) where
         gen = getstdGen seed
+
+assignPixelToCluster :: Pixel -> [Cluster] -> [Cluster]
+assignPixelToCluster _ [] = []
+assignPixelToCluster p (c:cs) = if (euclideanDistance (centroid c) p) < (euclideanDistance (centroid (head cs)) p)
+    then c {pixels = p : pixels c} : cs
+    else c : assignPixelToCluster p cs
+
+assignPixelsToClusters :: [Pixel] -> [Cluster] -> [Cluster]
+assignPixelsToClusters [] cls = cls
+assignPixelsToClusters (p:ps) cls = assignPixelsToClusters ps (assignPixelToCluster p cls)

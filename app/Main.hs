@@ -24,5 +24,4 @@ main = do
     let tab = createTabClusteropts opts gen
     linesFromFile <- getLinesListFromFile $ getFilePath opts
     let pixelsLet = parse linesFromFile
-    putStrLn (showListOfPixels pixelsLet)
-    putStr (showListOfCluster tab)
+    putStr (showListOfCluster (assignPixelsToClusters pixelsLet tab))
