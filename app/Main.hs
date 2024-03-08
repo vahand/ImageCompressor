@@ -8,7 +8,7 @@
 module Main (main) where
 
 import Options
-import DataStruct
+import DataStruct()
 import Cluster
 import System.Random
 

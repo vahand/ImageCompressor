@@ -52,12 +52,20 @@ createTabCluster n seed =
     (defaultCluster gen) : (createTabCluster (n - 1) gen) where
         gen = getstdGen seed
 
+-- targetPixel -> targetCluster -> restOfClusters -> result
+isTheNearestCluster :: Pixel -> Cluster -> [Cluster] -> Bool
+isTheNearestCluster _ _ [] = True
+isTheNearestCluster p c (c':cs) =
+    (euclideanDistance (centroid c) p) < (euclideanDistance (centroid c') p)
+    && isTheNearestCluster p c cs
+
 assignPixelToCluster :: Pixel -> [Cluster] -> [Cluster]
 assignPixelToCluster _ [] = []
-assignPixelToCluster p (c:cs) = if (euclideanDistance (centroid c) p) < (euclideanDistance (centroid (head cs)) p)
+assignPixelToCluster p (c:cs) = if (isTheNearestCluster p c cs)
     then c {pixels = p : pixels c} : cs
     else c : assignPixelToCluster p cs
 
 assignPixelsToClusters :: [Pixel] -> [Cluster] -> [Cluster]
 assignPixelsToClusters [] cls = cls
-assignPixelsToClusters (p:ps) cls = assignPixelsToClusters ps (assignPixelToCluster p cls)
+assignPixelsToClusters (p:ps) cls =
+    assignPixelsToClusters ps (assignPixelToCluster p cls)
