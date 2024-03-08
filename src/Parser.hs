@@ -15,11 +15,22 @@ module Parser
 where
 
 import DataStruct
+import Control.Exception (try, IOException)
+import System.Exit (exitWith, ExitCode (ExitFailure))
 
 getLinesListFromFile :: FilePath -> IO [String]
 getLinesListFromFile path = do
-    content <- readFile path
+    content <- readFileWithCatch path
     return $ lines content
+
+readFileWithCatch :: FilePath -> IO String
+readFileWithCatch path = do
+    result <- try (readFile path) :: IO (Either IOException String)
+    case result of
+        Left _ ->
+            putStrLn "readFile failed" >>
+            exitWith (ExitFailure 84)
+        Right content -> return content
 
 getFirstTuple :: String -> (Int, Int)
 getFirstTuple str = case reads str of
