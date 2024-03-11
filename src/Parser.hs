@@ -15,6 +15,8 @@ module Parser
 where
 
 import DataStruct
+import Pixel
+import Color
 import Control.Exception (try, IOException)
 import System.Exit (exitWith, ExitCode (ExitFailure))
 

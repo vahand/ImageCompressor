@@ -21,7 +21,7 @@ main = do
     opts <- parseArgs args
     print opts
     gen <- newStdGen
-    let tab = createTabClusteropts opts gen
+    let clusterList = createTabClusteropts opts gen
     linesFromFile <- getLinesListFromFile $ getFilePath opts
-    let pixelsLet = parse linesFromFile
-    putStr (showListOfCluster (assignPixelsToClusters pixelsLet tab))
+    let pixelsList = parse linesFromFile
+    putStr (showListOfCluster (kMeans clusterList pixelsList (getLim opts)))

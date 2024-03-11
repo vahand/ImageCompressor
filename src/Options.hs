@@ -10,7 +10,8 @@ module Options
         defaultOptions,
         options,
         parseArgs,
-        getFilePath
+        getFilePath,
+        getLim
     ) where
 
 import System.Console.GetOpt
@@ -40,6 +41,9 @@ options = [
 
 getFilePath :: Options -> FilePath
 getFilePath opts = filePath opts
+
+getLim :: Options -> Float
+getLim opts = convergenceLimit opts
 
 printUsage :: IO ()
 printUsage =

@@ -6,35 +6,43 @@
 --}
 
 module Cluster
-    ( Cluster (..),
+    (
         defaultCluster,
-        showListOfCluster,
-        createTabCluster,
-        createTabClusteropts,
         emptyCluster,
-        assignPixelsToClusters
+        showListOfCluster,
+        getstdGen,
+        createTabClusteropts,
+        createTabCluster,
+        isTheNearestCluster,
+        assignPixelToCluster,
+        assignPixelsToClusters,
+        updateCentroid,
+        kMeans
     ) where
 
+import Pixel
 import DataStruct
+import Color
 import Options
 import System.Random
 
-data Cluster = Cluster {
-    pixels :: [Pixel],
-    centroid :: Pixel
-}
+isConvergence :: Cluster -> Cluster -> Float -> Bool
+isConvergence (Cluster _ cl1) (Cluster _ cl2) n =
+    if abs(euclideanDistance cl1 cl2) <= n then True else False
+
+hasConverge :: [Cluster] -> [Cluster] -> Float -> Bool
+hasConverge [] [] _ = False
+hasConverge (s:xs) (ss:ys) lim =
+    if isConvergence s ss lim == True then True else hasConverge xs ys lim
+hasConverge _ _ _ = False
 
 defaultCluster :: StdGen -> Cluster
-defaultCluster gen = Cluster {pixels = [defaultPixel],
+defaultCluster gen = Cluster {pixels = [],
     centroid = randomPixel gen}
 
 emptyCluster :: [Cluster] -> [Cluster]
 emptyCluster [] = []
 emptyCluster (cl:cls) = emptyPixel (pixels cl) >> emptyCluster cls
-
-instance Show Cluster where
-    show (Cluster (b:bs) (Pixel _ _ col)) = "--\n" ++ show col ++ "\n-\n" ++ show b ++ showListOfPixels bs ++ "\n"
-    show (Cluster _ _) = ""
 
 showListOfCluster :: [Cluster] -> [Char]
 showListOfCluster [] = ""
@@ -69,3 +77,18 @@ assignPixelsToClusters :: [Pixel] -> [Cluster] -> [Cluster]
 assignPixelsToClusters [] cls = cls
 assignPixelsToClusters (p:ps) cls =
     assignPixelsToClusters ps (assignPixelToCluster p cls)
+
+-- current cluster list -> new cluster list updated
+updateCentroid :: [Cluster] -> [Cluster]
+updateCentroid [] = []
+updateCentroid (c:cls) = c {centroid = Pixel {x = x (centroid c),
+    y = y (centroid c),
+    color = (averagecolor (pixels c) (sumcolor (pixels c))
+    (color (centroid c)))}} : (updateCentroid cls)
+
+kMeans :: [Cluster] -> [Pixel] -> Float -> [Cluster]
+kMeans cls pxls lim =
+    if (hasConverge cls (updateCentroid (assignPixelsToClusters pxls cls)) lim)
+        then (updateCentroid (assignPixelsToClusters pxls cls))
+        else kMeans (emptyCluster (updateCentroid
+        (assignPixelsToClusters pxls cls))) pxls lim
