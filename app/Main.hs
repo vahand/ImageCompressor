@@ -19,7 +19,6 @@ main :: IO ()
 main = do
     args <- getArgs
     opts <- parseArgs args
-    print opts
     gen <- newStdGen
     let clusterList = createTabClusteropts opts gen
     linesFromFile <- getLinesListFromFile $ getFilePath opts
