@@ -37,12 +37,14 @@ hasConverge (s:xs) (ss:ys) lim =
 hasConverge _ _ _ = False
 
 defaultCluster :: StdGen -> Cluster
-defaultCluster gen = Cluster {pixels = [],
+defaultCluster gen = Cluster {pixels = [defaultPixel],
     centroid = randomPixel gen}
 
 emptyCluster :: [Cluster] -> [Cluster]
 emptyCluster [] = []
-emptyCluster (cl:cls) = emptyPixel (pixels cl) >> emptyCluster cls
+emptyCluster (cl:cls) = Cluster {
+    centroid = centroid cl,
+    pixels = []} : emptyCluster cls
 
 showListOfCluster :: [Cluster] -> [Char]
 showListOfCluster [] = ""
@@ -88,7 +90,8 @@ updateCentroid (c:cls) = c {centroid = Pixel {x = x (centroid c),
 
 kMeans :: [Cluster] -> [Pixel] -> Float -> [Cluster]
 kMeans cls pxls lim =
-    if (hasConverge cls (updateCentroid (assignPixelsToClusters pxls cls)) lim)
-        then (updateCentroid (assignPixelsToClusters pxls cls))
+    if (hasConverge cls (updateCentroid (newList)) lim)
+        then (updateCentroid (newList))
         else kMeans (emptyCluster (updateCentroid
-        (assignPixelsToClusters pxls cls))) pxls lim
+        (newList))) pxls lim
+    where newList = assignPixelsToClusters pxls cls
