@@ -37,7 +37,7 @@ hasConverge (s:xs) (ss:ys) lim =
 hasConverge _ _ _ = False
 
 defaultCluster :: StdGen -> Cluster
-defaultCluster gen = Cluster {pixels = [defaultPixel],
+defaultCluster gen = Cluster {pixels = [],
     centroid = randomPixel gen}
 
 emptyCluster :: [Cluster] -> [Cluster]
