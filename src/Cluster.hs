@@ -28,7 +28,7 @@ import System.Random
 
 isConvergence :: Cluster -> Cluster -> Float -> Bool
 isConvergence (Cluster _ cl1) (Cluster _ cl2) n =
-    if abs(euclideanDistance cl1 cl2) <= n then True else False
+    if abs(euclideanDistance cl1 cl2) > n then True else False
 
 hasConverge :: [Cluster] -> [Cluster] -> Float -> Bool
 hasConverge [] [] _ = False
@@ -90,7 +90,7 @@ updateCentroid (c:cls) = c {centroid = Pixel {x = x (centroid c),
 
 kMeans :: [Cluster] -> [Pixel] -> Float -> [Cluster]
 kMeans cls pxls lim =
-    if (hasConverge cls (updateCentroid (newList)) lim)
+    if ((hasConverge cls (updateCentroid (newList)) lim == False))
         then (updateCentroid (newList))
         else kMeans (emptyCluster (updateCentroid
         (newList))) pxls lim
