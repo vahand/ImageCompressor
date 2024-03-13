@@ -80,6 +80,14 @@ assignPixelsToClusters [] cls = cls
 assignPixelsToClusters (p:ps) cls =
     assignPixelsToClusters ps (assignPixelToCluster p cls)
 
+forceAssign :: [Pixel] -> [Cluster] -> [Cluster]
+forceAssign [] cls = cls
+forceAssign (p:ps) (c:cs) =
+    if (pixels c == [])
+        then forceAssign ps (c {pixels = p : pixels c} : cs)
+        else c : forceAssign ps cs
+forceAssign _ _ = []
+
 -- current cluster list -> new cluster list updated
 updateCentroid :: [Cluster] -> [Cluster]
 updateCentroid [] = []
@@ -94,4 +102,4 @@ kMeans cls pxls lim =
         then (updateCentroid (newList))
         else kMeans (emptyCluster (updateCentroid
         (newList))) pxls lim
-    where newList = assignPixelsToClusters pxls cls
+    where newList = forceAssign pxls (assignPixelsToClusters pxls cls)
