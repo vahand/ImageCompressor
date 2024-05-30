@@ -18,7 +18,7 @@ make
 > **_NOTE_**: if the command `make fclean` return an error, it means that no cleaning was necessary.
 
 ## Launch the program with image generation
-To get the compressed image in **.png** format, go to `pythonTester` directory by executing the command `cd pythonTester` and follow these commands:
+To get the compressed image in **.png** format, go to `pythonTester` directory by executing the command `cd pythonTester` and follow this command:
 ```
 ./compressor.sh [image_to_compress_path] [number_of_clusters] [convergence_limit]
 ```
