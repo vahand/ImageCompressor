@@ -1,8 +1,9 @@
 .stack-work/
 *~
-compressor
 *.log
 lambdananas
 *.txt
 imageCompressor
-tester
+*.png
+*.jpeg
+*.jpg
